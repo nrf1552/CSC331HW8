@@ -47,7 +47,7 @@ public class ViewerMenu {
 		// Create menu for all available images
 		menu = new JMenu("Image");
 		menuBar.add(menu);
-		submenu = new JMenu("Select an image");
+		submenu = new JMenu("Select a supplied image");
 		for (int i = 0; i < images.length; i++) {
 			menuitem = new JMenuItem(images[i].replaceAll(".jpg", ""), acceleratorKeyCodeTracker + i);
 			acceleratorKeyCodeTracker += i;
@@ -63,68 +63,10 @@ public class ViewerMenu {
 			});
 		}
 		menu.add(submenu);
-
-		// create sub menu for the # of problems
-		submenu = new JMenu("Select # of problems");
-		for (int i = 0; i < numberOfProblems.length; i++) {
-			menuitem = new JMenuItem(Integer.toString(numberOfProblems[i]), acceleratorKeyCodeTracker + i);
-			acceleratorKeyCodeTracker += i;
-			menuitem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1 + i, ActionEvent.ALT_MASK));
-			submenu.add(menuitem);
-			
-			final int index = i;// needed to pass iterator into ActionListener 
-			menuitem.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					viewer.selectedNumberOfPanels = numberOfProblems[index];
-					viewer.displayImageComponents();
-				}
-			});
-		}
-		menu.add(submenu);
-
-		// create sub menu for the number family type and calculation type
-		submenu = new JMenu("Select number family");
-		radiogroup = new ButtonGroup();
-
-		for (int i = 0; i <= 12; i++) {
-			radioItem = new JRadioButtonMenuItem(Integer.toString(i));
-			radiogroup.add(radioItem);
-			submenu.add(radioItem);
-			
-			final int index = i;// needed to pass iterator into ActionListener 
-			radioItem.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					viewer.selectedNumber = index;
-					viewer.displayImageComponents();
-				}
-			});
-		}		
-		submenu.addSeparator();
-		radiogroup = new ButtonGroup();
-		for (int i = 0; i  < calculationType.length; i++){
-			radioItem = new JRadioButtonMenuItem(calculationType[i]);
-			radiogroup.add(radioItem);
-			submenu.add(radioItem);
-			
-			final int index = i;// needed to pass iterator into ActionListener 
-			radioItem.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					viewer.isAddSubtract = (calculationType[index]==calculationType[0]);
-					viewer.displayImageComponents();
-				}
-			});
-		}
-		menu.add(submenu);
 		menu.addSeparator();
-
-		// exit menu item
-		menuitem = new JMenuItem("Exit");
+		menuitem = new JMenuItem("Select from web");
 		menu.add(menuitem);
-		menuitem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
-			}
-		});
+		
 
 		return menuBar;
 	}
