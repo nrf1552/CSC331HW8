@@ -91,7 +91,6 @@ public class ImagePanel extends JPanel {
 		int g = (int)(c.getGreen() * 0.587);
 		int b = (int)(c.getBlue() * 0.114);
 		
-		//int l = r+g+b;
 		int l = (r+g+b);
 
 		return l;
