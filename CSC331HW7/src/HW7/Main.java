@@ -13,7 +13,7 @@ import java.util.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class Viewer {
+public class Main {
 
 	public static Integer DEFAULTIMAGEHEIGHT = 900;
 	public static Integer DEFAULTIMAGEWIDTH = 600;
@@ -31,7 +31,7 @@ public class Viewer {
 	private HistogramPanel histogramPanel;
 	private EnhancedImagePanel enchancedImagePanel;
 
-	public Viewer() {
+	public Main() {
 		// Instantiate JFrame
 		frame = new JFrame("Homework 7");
 
@@ -50,10 +50,6 @@ public class Viewer {
 		// Show it
 		frame.setVisible(true);
 		frame.pack();
-	}
-
-	public static void main(String[] args) {
-		new Viewer();
 	}
 
 	public void changeImage(BufferedImage image) {
@@ -85,5 +81,9 @@ public class Viewer {
 			frame.pack();
 			panelContainer.revalidate();
 		}
+	}
+	
+	public static void main(String[] args) {
+		new Main();
 	}
 }

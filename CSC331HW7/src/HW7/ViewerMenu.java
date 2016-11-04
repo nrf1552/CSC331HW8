@@ -27,7 +27,7 @@ public class ViewerMenu {
 	int acceleratorKeyCodeTracker = KeyEvent.VK_1;
 	int mnemonicKeyCode = KeyEvent.VK_1;
 
-	public JMenuBar menu(Viewer viewer) {
+	public JMenuBar menu(Main viewer) {
 		JMenuBar menuBar;
 		JMenu menu;
 		JMenu submenu;

@@ -1,5 +1,6 @@
 package HW7;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -81,13 +82,17 @@ public class ImagePanel extends JPanel {
 		return bi;
 	}
 
-	private int calculateLuminance(int rgbValue) {
+	private int calculateLuminance(int rgb) {
 		// TU-R 601-2 luma transform
 		// L = R * 299/1000 + G * 587/1000 + B * 114/1000
-		int r = (int)(rgbValue * .299);
-		int g = (int)(rgbValue * .587);
-		int b = (int)(rgbValue * .114);
-		int l = (r + g + b);
+		Color c = new Color(rgb);
+		
+		int r = (int)(c.getRed() * 0.299);
+		int g = (int)(c.getGreen() * 0.587);
+		int b = (int)(c.getBlue() * 0.114);
+		
+		//int l = r+g+b;
+		int l = (r+g+b);
 
 		return l;
 	}
