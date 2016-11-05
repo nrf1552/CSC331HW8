@@ -110,4 +110,8 @@ public class ImageData {
 	public int getWidth() {
 		return w;
 	}
+	
+	public int getAverageIntensity(){
+		
+	}
 }
