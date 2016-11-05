@@ -5,93 +5,109 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class ImageData {
-	BufferedImage image;
+	BufferedImage originalImage;
 	BufferedImage greyScaleImage;
 	BufferedImage enhancedImage;
 
 	ArrayList<PixelData> pixels;
 
-	int avgRed = 0;
-	int avgGreen = 0;
-	int avgBlue = 0;
+	int[] reds;
+	int[] greens;
+	int[] blues;
 
 	int h;
 	int w;
 
 	public ImageData(BufferedImage img) {
-		image = img;
+		originalImage = img;
 		h = img.getHeight();
 		w = img.getWidth();
 
 		pixels = new ArrayList<PixelData>();
+		reds = new int[257];
+		greens = new int[257];
+		blues = new int[257];
 
-		getPixels();
+		initPixels();
 	}
 
-	private void getPixels() {
+	private void initPixels() {
 		for (int x = 0; x < w; x++) {
 			for (int y = 0; y < h; y++) {
 				// get RGB value
-				int rgb = image.getRGB(x, y);
+				int rgb = originalImage.getRGB(x, y);
 
-				// convert to color
+				// count occurrences of each color
 				Color c = new Color(rgb);
+				reds[c.getRed()] += 1;
+				greens[c.getGreen()] += 1;
+				blues[c.getBlue()] += 1;
 
-				// add to RGB data object list
-				pixels.add(new PixelData(c, x, y));
+				// add to pixel data object list
+				pixels.add(new PixelData(rgb, x, y));
 			}
 		}
 	}
 
-	private void getPixelIntensity() {
+	public ArrayList<PixelData> getPixels() {
+		return pixels;
+	}
 
+	public BufferedImage getEnhancedImage() {
+		if (enhancedImage == null) {
+
+			BufferedImage ei = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+
+			for (PixelData px : pixels) {
+				// TU-R 601-2 luma transform
+				// L = R * 299/1000 + G * 587/1000 + B * 114/1000
+				int l = px.r * 299 / 1000 + px.g * 587 / 1000 + px.b * 114 / 1000;
+
+				// More readable than int p = (l<<16)|(l<<8)|l;
+				int rgb = new Color(l, l, l).getRGB();
+
+				// Set the greyscale pixel
+				ei.setRGB(px.x, px.y, rgb);
+			}
+
+			enhancedImage = ei;
+		}
+
+		return enhancedImage;
 	}
 
 	public BufferedImage getOriginalImage() {
-		return image;
+		return originalImage;
 	}
 
 	public BufferedImage getGreyScaleImage() {
 		if (greyScaleImage == null) {
-			BufferedImage gsi = new BufferedImage(h, w, BufferedImage.TYPE_INT_RGB);
 
-			for (PixelData pixel : pixels) {
+			BufferedImage gsi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+
+			for (PixelData px : pixels) {
 				// TU-R 601-2 luma transform
 				// L = R * 299/1000 + G * 587/1000 + B * 114/1000
-				int r = (int)(pixel.r * (299/1000));
-				int g = (int)(pixel.g * (587/1000));
-				int b = (int)(pixel.b * (114/1000));
-				
-				int l = (r+g+b);
-				
-				gsi.setRGB(pixel.x, pixel.y, l);
+				int l = px.r * 299 / 1000 + px.g * 587 / 1000 + px.b * 114 / 1000;
+
+				// More readable than int p = (l<<16)|(l<<8)|l;
+				int rgb = new Color(l, l, l).getRGB();
+
+				// Set the greyscale pixel
+				gsi.setRGB(px.x, px.y, rgb);
 			}
-			
+
 			greyScaleImage = gsi;
 		}
 
 		return greyScaleImage;
 	}
 
-	// Nested class. We don't care about this outside of ImageData but it makes
-	// working with pixel data easier
-	class PixelData {
-		public int r;
-		public int g;
-		public int b;
-		public int x;
-		public int y;
-		public int rgb;
+	public int getHeight() {
+		return h;
+	}
 
-		public PixelData(Color color, int xCoord, int yCoord) {
-			rgb = color.getRGB();
-
-			r = color.getRed();
-			g = color.getGreen();
-			b = color.getBlue();
-
-			x = xCoord;
-			y = yCoord;
-		}
+	public int getWidth() {
+		return w;
 	}
 }

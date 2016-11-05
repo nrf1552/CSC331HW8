@@ -14,10 +14,10 @@ public class EnhancedImagePanel extends JPanel {
 	private int panelWidth;
 	private BufferedImage img;
 
-	public EnhancedImagePanel(BufferedImage bi) {
-		panelHeight = bi.getHeight();
-		panelWidth = bi.getWidth();
-		img = bi;
+	public EnhancedImagePanel(ImageData imageData) {
+		panelHeight = imageData.getHeight();
+		panelWidth = imageData.getWidth();
+		img = imageData.getOriginalImage();
 		setPreferredSize(new Dimension(panelWidth, panelHeight));
 	}
 

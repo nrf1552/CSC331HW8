@@ -24,7 +24,7 @@ public class Main {
 	public Boolean isAddSubtract;
 
 	private JFrame frame;
-	private BufferedImage img;
+	private ImageData img;
 	private JPanel panelContainer;
 
 	private ImagePanel imagePanel;
@@ -53,12 +53,12 @@ public class Main {
 	}
 
 	public void changeImage(BufferedImage image) {
-		img = image;
+		img = new ImageData(image);
 
 		refreshImageContainer(img);
 	}
 
-	private void refreshImageContainer(BufferedImage bi) {
+	private void refreshImageContainer(ImageData bi) {
 		// if image is null/not yet initialized, set to default size
 		if (bi == null) {
 			int w = (DEFAULTIMAGEWIDTH * 2) + DEFAULTHISTOGRAMWIDTH;

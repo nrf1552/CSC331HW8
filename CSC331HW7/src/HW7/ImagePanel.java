@@ -25,12 +25,12 @@ public class ImagePanel extends JPanel {
 	private BufferedImage displayedImage;
 	private boolean isOriginal;
 
-	public ImagePanel(BufferedImage bi) {
-		panelHeight = bi.getHeight();
-		panelWidth = bi.getWidth();
-		
-		originalImage = bi;
-		greyscaleImage = getGreyScaleImage(originalImage);
+	public ImagePanel(ImageData imageData) {
+		panelHeight = imageData.getHeight();
+		panelWidth = imageData.getWidth();
+
+		originalImage = imageData.getOriginalImage();
+		greyscaleImage = imageData.getGreyScaleImage();
 		displayedImage = originalImage;
 		isOriginal = true;
 
@@ -65,46 +65,15 @@ public class ImagePanel extends JPanel {
 		g2.drawImage(displayedImage, 0, 0, this);
 	}
 
-	private BufferedImage getGreyScaleImage(BufferedImage img) {
-		int h = img.getHeight();
-		int w = img.getWidth();
-		BufferedImage bi = new BufferedImage(w,h,BufferedImage.TYPE_INT_RGB);
-
-		for (int y = 0; y < h; y++) {
-			for (int x = 0; x < w; x++) {
-				int color = img.getRGB(x, y);
-				int l = calculateLuminance(color);
-
-				bi.setRGB(x, y, l);
-			}
-		}
-
-		return bi;
-	}
-
-	private int calculateLuminance(int rgb) {
-		// TU-R 601-2 luma transform
-		// L = R * 299/1000 + G * 587/1000 + B * 114/1000
-		Color c = new Color(rgb);
-		
-		int r = (int)(c.getRed() * 0.299);
-		int g = (int)(c.getGreen() * 0.587);
-		int b = (int)(c.getBlue() * 0.114);
-		
-		int l = (r+g+b);
-
-		return l;
-	}
-	
-	private void toggleImage(){
+	private void toggleImage() {
 		isOriginal = !isOriginal;
-		
-		if(isOriginal){
+
+		if (isOriginal) {
 			displayedImage = originalImage;
 		} else {
 			displayedImage = greyscaleImage;
 		}
-		
+
 		repaint();
 	}
 }

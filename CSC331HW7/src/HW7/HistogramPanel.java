@@ -13,41 +13,41 @@ import javax.swing.JPanel;
 
 public class HistogramPanel extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	private int panelHeight;
-	private int panelWidth;
-	private BufferedImage img;
-	
-	private List<Integer> reds;
-	private List<Integer> greens;
-	private List<Integer> blues;
-	
+	static final long serialVersionUID = 1L;
+
+	int panelHeight;
+	int panelWidth;
+
+	BufferedImage img;
+	ImageData data;
+
+	int[] reds;
+	int[] greens;
+	int[] blues;
+
 	int avgRed = 0;
 	int avgGreen = 0;
 	int avgBlue = 0;
 
-	public HistogramPanel(BufferedImage bi) {
-		panelHeight = bi.getHeight();
+	public HistogramPanel(ImageData imageData) {
+		data = imageData;
+		panelHeight = data.getHeight();
 		panelWidth = Main.DEFAULTHISTOGRAMWIDTH;
-		img = bi;
-		
-		reds = new ArrayList<Integer>();
-		greens = new ArrayList<Integer>();
-		blues = new ArrayList<Integer>();
-		
+		img = data.getOriginalImage();
+
+		reds = new int[257];
+		greens = new int[257];
+		blues = new int[257];
+
 		for (int y = 0; y < panelHeight; y++) {
 			for (int x = 0; x < img.getWidth(); x++) {
 				int rgb = img.getRGB(x, y);
 				Color c = new Color(rgb);
-				
-				reds.add(c.getRed());
-				greens.add(c.getGreen());
-				blues.add(c.getBlue());
 			}
 		}
-		
+
 		setAvgPixelIntensity();
-		
+
 		setPreferredSize(new Dimension(panelWidth, panelHeight));
 	}
 
@@ -56,36 +56,24 @@ public class HistogramPanel extends JPanel {
 		g2.fillRect(0, 0, panelWidth, panelHeight);
 		// g2.drawImage(img, 0, 0, this);
 	}
-	
-	private void setAvgPixelIntensity(){		
-		for (int i:reds){
-			avgRed+=i;
-		}
-		for (int i:greens){
-			avgGreen+=i;
-		}
-		for (int i:blues){
-			avgBlue+=i;
-		}
-		
-		avgRed /= reds.size();
-		avgGreen /= greens.size();
-		avgBlue /= blues.size();
+
+	private void setAvgPixelIntensity() {
+		ArrayList<PixelData> pixels = data.getPixels();
 	}
-	
-	private void  getImageName(){
-		
+
+	private void getImageName() {
+
 	}
-	
-	private void getImageMode(){
-		
+
+	private void getImageMode() {
+
 	}
-	
-	private void getMostFrequentPixelIntensity(){
-		
+
+	private void getMostFrequentPixelIntensity() {
+
 	}
-	
-	private void getSumOfPixelCountInQuarter(){
-		
+
+	private void getSumOfPixelCountInQuarter() {
+
 	}
 }
