@@ -58,9 +58,9 @@ public class Main {
 		refreshImageContainer(img);
 	}
 
-	private void refreshImageContainer(ImageData bi) {
+	private void refreshImageContainer(ImageData imageData) {
 		// if image is null/not yet initialized, set to default size
-		if (bi == null) {
+		if (imageData == null) {
 			int w = (DEFAULTIMAGEWIDTH * 2) + DEFAULTHISTOGRAMWIDTH;
 			
 			panelContainer.setPreferredSize(
@@ -76,7 +76,7 @@ public class Main {
 			panelContainer.add(histogramPanel, BorderLayout.CENTER);
 			panelContainer.add(enchancedImagePanel, BorderLayout.EAST);
 
-			panelContainer.setPreferredSize(new Dimension((bi.getWidth() * 2) + DEFAULTHISTOGRAMWIDTH, bi.getHeight()));
+			panelContainer.setPreferredSize(new Dimension((imageData.getWidth() * 2) + DEFAULTHISTOGRAMWIDTH, imageData.getHeight()));
 
 			frame.pack();
 			panelContainer.revalidate();
