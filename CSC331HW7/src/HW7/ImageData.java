@@ -8,6 +8,7 @@ public class ImageData {
 	BufferedImage originalImage;
 	BufferedImage greyScaleImage;
 	BufferedImage enhancedImage;
+	HistogramData histogramData;
 
 	ArrayList<PixelData> pixels;
 
@@ -47,6 +48,8 @@ public class ImageData {
 				pixels.add(new PixelData(rgb, x, y));
 			}
 		}
+		
+		histogramData = new HistogramData(reds,greens,blues);
 	}
 
 	public ArrayList<PixelData> getPixels() {
@@ -110,8 +113,5 @@ public class ImageData {
 	public int getWidth() {
 		return w;
 	}
-	
-	public int getAverageIntensity(){
-		
-	}
+
 }
