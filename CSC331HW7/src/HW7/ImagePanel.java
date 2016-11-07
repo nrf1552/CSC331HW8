@@ -13,6 +13,7 @@ import javax.swing.JPanel;
  * 
  * @author Nick Fields
  *
+ * Displays original or greyscale original image 
  */
 
 public class ImagePanel extends JPanel {

@@ -6,7 +6,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
-
+/**
+ * 
+ * @author nickf
+ *
+ * This displays the enhanced image. I admit that this isn't complete.
+ *
+ */
 public class EnhancedImagePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;

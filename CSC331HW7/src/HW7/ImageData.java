@@ -3,57 +3,54 @@ package HW7;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+/**
+ * 
+ * @author nickf
+ *
+ * Stores original, greyscale, and enhanced image data
+ */
 
 public class ImageData {
 	BufferedImage originalImage;
 	BufferedImage greyScaleImage;
 	BufferedImage enhancedImage;
-	HistogramData histogramData;
 
-	ArrayList<PixelData> pixels;
+	public Histogram originalHistogram;
+	public Histogram greyscaleHistogram;
+	public Histogram enhancedHistogram;
 
-	int[] reds;
-	int[] greens;
-	int[] blues;
+	ArrayList<PixelData> originalPixels;
+	ArrayList<PixelData> greyscalePixels;
+	ArrayList<PixelData> enhancedPixels;
 
 	int h;
 	int w;
+	
+	String name;
 
 	public ImageData(BufferedImage img) {
 		originalImage = img;
 		h = img.getHeight();
 		w = img.getWidth();
 
-		pixels = new ArrayList<PixelData>();
-		reds = new int[257];
-		greens = new int[257];
-		blues = new int[257];
-
-		initPixels();
+		originalPixels = getPixelData(originalImage);
+		originalHistogram = new Histogram(originalPixels);
 	}
 
-	private void initPixels() {
-		for (int x = 0; x < w; x++) {
-			for (int y = 0; y < h; y++) {
+	private ArrayList<PixelData> getPixelData(BufferedImage img) {
+		ArrayList<PixelData> data = new ArrayList<PixelData>();
+		
+		for (int x = 0; x < img.getWidth(); x++) {
+			for (int y = 0; y < img.getHeight(); y++) {
 				// get RGB value
-				int rgb = originalImage.getRGB(x, y);
-
-				// count occurrences of each color
-				Color c = new Color(rgb);
-				reds[c.getRed()] += 1;
-				greens[c.getGreen()] += 1;
-				blues[c.getBlue()] += 1;
+				int rgb = img.getRGB(x, y);
 
 				// add to pixel data object list
-				pixels.add(new PixelData(rgb, x, y));
+				data.add(new PixelData(rgb, x, y));
 			}
 		}
 		
-		histogramData = new HistogramData(reds,greens,blues);
-	}
-
-	public ArrayList<PixelData> getPixels() {
-		return pixels;
+		return data;
 	}
 
 	public BufferedImage getEnhancedImage() {
@@ -61,7 +58,7 @@ public class ImageData {
 
 			BufferedImage ei = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
 
-			for (PixelData px : pixels) {
+			for (PixelData px : originalPixels) {
 				// TU-R 601-2 luma transform
 				// L = R * 299/1000 + G * 587/1000 + B * 114/1000
 				int l = px.r * 299 / 1000 + px.g * 587 / 1000 + px.b * 114 / 1000;
@@ -74,6 +71,8 @@ public class ImageData {
 			}
 
 			enhancedImage = ei;
+			enhancedPixels = getPixelData(enhancedImage);
+			enhancedHistogram = new Histogram(enhancedPixels);
 		}
 
 		return enhancedImage;
@@ -88,7 +87,7 @@ public class ImageData {
 
 			BufferedImage gsi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
 
-			for (PixelData px : pixels) {
+			for (PixelData px : originalPixels) {
 				// TU-R 601-2 luma transform
 				// L = R * 299/1000 + G * 587/1000 + B * 114/1000
 				int l = px.r * 299 / 1000 + px.g * 587 / 1000 + px.b * 114 / 1000;
@@ -101,6 +100,8 @@ public class ImageData {
 			}
 
 			greyScaleImage = gsi;
+			greyscalePixels = getPixelData(greyScaleImage);
+			greyscaleHistogram = new Histogram(greyscalePixels);
 		}
 
 		return greyScaleImage;
@@ -113,5 +114,8 @@ public class ImageData {
 	public int getWidth() {
 		return w;
 	}
-
+	
+	public String getName(){
+		return name;
+	}
 }

@@ -2,6 +2,12 @@ package HW7;
 
 import java.awt.Color;
 
+/**
+ * 
+ * @author nickf
+ *
+ * Nobody knows/cares about this class outside of the ImageData class
+ */
 public class PixelData {
 	public Color color;
 	public int r;
@@ -10,6 +16,7 @@ public class PixelData {
 	public int x;
 	public int y;
 	public int rgb;
+	public int averageIntensity;
 
 	public PixelData(int rgb, int xCoord, int yCoord) {
 		color = new Color(rgb);
@@ -22,5 +29,7 @@ public class PixelData {
 
 		x = xCoord;
 		y = yCoord;
+		
+		averageIntensity = (r+g+b)/3;
 	}
 }

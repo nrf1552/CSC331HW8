@@ -2,17 +2,17 @@ package HW7;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/**
+ * 
+ * @author nickf
+ *
+ * Creates the main frame for viewing
+ */
 public class Main {
 
 	public static Integer DEFAULTIMAGEHEIGHT = 900;
@@ -22,16 +22,21 @@ public class Main {
 	public Integer selectedNumber;
 	public Integer selectedNumberOfPanels;
 	public Boolean isAddSubtract;
+	
+	public ArrayList<ImageData> images;
 
-	private JFrame frame;
-	private ImageData img;
-	private JPanel panelContainer;
+	JFrame frame;
+	ImageData img;
+	JPanel panelContainer;
 
-	private ImagePanel imagePanel;
-	private HistogramPanel histogramPanel;
-	private EnhancedImagePanel enchancedImagePanel;
+	ImagePanel imagePanel;
+	HistogramPanel histogramPanel;
+	EnhancedImagePanel enchancedImagePanel;
 
 	public Main() {
+		// Initialize Images list
+		images = new ArrayList<ImageData>();
+		
 		// Instantiate JFrame
 		frame = new JFrame("Homework 7");
 
