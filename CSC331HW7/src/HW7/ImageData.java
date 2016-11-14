@@ -85,7 +85,10 @@ public class ImageData {
 		if (sobelEdgeImage == null) {
 			BufferedImage si = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
 			
+			
+			//todo: modify color from black/white to whatever is selected by user
 			for (PixelData px : originalPixels) {
+				//todo: modify 152 to be the threshold selected by user
 				if(px.gradientEstimate > 152){
 					si.setRGB(px.x, px.y, Color.black.getRGB());
 				}
@@ -93,9 +96,6 @@ public class ImageData {
 				{
 					si.setRGB(px.x, px.y, Color.white.getRGB());
 				}
-				
-				// Set the greyscale pixel
-				//si.setRGB(px.x, px.y, rgb);
 			}
 
 			sobelEdgeImage = si;

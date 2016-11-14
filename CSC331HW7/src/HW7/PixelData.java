@@ -7,7 +7,10 @@ import java.awt.image.BufferedImage;
  * 
  * @author nickf
  *
- *         Nobody knows/cares about this class outside of the ImageData class
+ * Helper class to track pixel data such as rgb, bordering pixels, intensity and gradient   
+ * 
+ * This is not working properly as a result of adding edge detection
+ * I'm not able to get edge data on the actual edges of the image because when x=0, i cannot access x-1
  */
 public class PixelData {
 	public Color color;
@@ -46,7 +49,6 @@ public class PixelData {
 	}
 	
 	public int calculateGradientEstimate(Border border){
-		int i = 0;
 		
 		int yGradient = 
 				 (border.topLeft.getRed() *  1)
@@ -72,7 +74,7 @@ public class PixelData {
 		
 		int gradientThreshold = (xGradient + yGradient)/8;
 		
-		return i;
+		return gradientThreshold;
 	}
 
 	public class Border {

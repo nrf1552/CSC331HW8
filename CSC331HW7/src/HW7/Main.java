@@ -11,7 +11,7 @@ import javax.swing.*;
  * 
  * @author nickf
  *
- * Creates the main frame for viewing
+ * Creates the main frame for viewing and runs the program
  */
 public class Main {
 

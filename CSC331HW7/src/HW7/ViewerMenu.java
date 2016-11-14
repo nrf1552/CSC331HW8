@@ -18,8 +18,13 @@ import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
-//creates the viewermenu
+/**
+ * 
+ * @author Nick
+ * 
+ * Creates the viewer menu
+ *
+ */
 public class ViewerMenu {
 
 	JTextArea output;
@@ -148,6 +153,21 @@ public class ViewerMenu {
 				saveImage();
 			}
 		});
+		
+		submenu = new JMenu("Background Image");
+		
+		menuItem = new JMenuItem("Original color image");
+		submenu.add(menuItem);
+		
+		menuItem = new JMenuItem("Gray scale image");
+		submenu.add(menuItem);
+		
+		menuItem = new JMenuItem("Black image");
+		submenu.add(menuItem);
+		
+		menuItem = new JMenuItem("White image");
+		submenu.add(menuItem);
+		
 
 		return menuBar;
 	}
