@@ -32,4 +32,6 @@ public class EnhancedImagePanel extends JPanel {
 		g2.fillRect(0, 0, panelWidth, panelHeight);
 		g2.drawImage(img, 0, 0, this);
 	}
+	
+	
 }

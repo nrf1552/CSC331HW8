@@ -127,6 +127,28 @@ public class ViewerMenu {
 		submenu.add(urlPanel);
 		menu.add(submenu);
 
+		// Create Enhancement menu
+		menu = new JMenu("Enhancement");
+		menuBar.add(menu);
+
+		menuItem = new JMenuItem("Histogram Equalized", KeyEvent.VK_H);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				saveImage();
+			}
+		});
+
+		menuItem = new JMenuItem("Sobel Edge Detection", KeyEvent.VK_E);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
+		menu.add(menuItem);
+		menuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				saveImage();
+			}
+		});
+
 		return menuBar;
 	}
 
@@ -136,7 +158,7 @@ public class ViewerMenu {
 		try {
 			PrintWriter printWriter = new PrintWriter(filename, "UTF-8");
 			printWriter.println("Nick Fields");
-			
+
 			ArrayList<String> strings = new ArrayList<String>();
 			for (int i = 0; i <= 255; i++) {
 				strings.add(Integer.toString(i));
@@ -145,9 +167,9 @@ public class ViewerMenu {
 			printWriter.println("Pixel," + String.join(",", strings));
 			// blank line
 			printWriter.println();
-			
-			// 
-			for(ImageData iData:viewer.images){
+
+			//
+			for (ImageData iData : viewer.images) {
 				// initialize list of values
 				ArrayList<String> s = new ArrayList<>();
 				// name
@@ -156,7 +178,7 @@ public class ViewerMenu {
 				s.add("Original");
 				// average intensity
 				s.add(Integer.toString(iData.originalHistogram.getAveragePixelIntensity()));
-				//  most frequent intensity
+				// most frequent intensity
 				s.add("MostFrequentRed=" + Integer.toString(iData.originalHistogram.getMostFrequentRed()));
 				s.add("MostFrequentGreen" + Integer.toString(iData.originalHistogram.getMostFrequentGreen()));
 				s.add("MostFrequentBlue=" + Integer.toString(iData.originalHistogram.getMostFrequentBlue()));
@@ -166,11 +188,9 @@ public class ViewerMenu {
 				s.add("Q3 Pixel Count: ");
 				s.add("Q4 Pixel Count: ");
 				// histogram data
-				
-				
-				
+
 				printWriter.println("");
-				
+
 			}
 
 		} catch (IOException e) {

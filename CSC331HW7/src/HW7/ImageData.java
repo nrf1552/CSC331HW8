@@ -13,17 +13,20 @@ import java.util.ArrayList;
 public class ImageData {
 	BufferedImage originalImage;
 	BufferedImage greyScaleImage;
-	BufferedImage enhancedImage;
-
+	BufferedImage histogramEqualizedImage;
+	BufferedImage sobelEdgeImage;
+	
 	public Histogram originalHistogram;
 	public Histogram greyscaleHistogram;
 	public Histogram enhancedHistogram;
+	public Histogram sobelHistogram;
 
 	ArrayList<PixelData> originalPixels;
 	ArrayList<PixelData> greyscalePixels;
 	ArrayList<PixelData> enhancedPixels;
+	ArrayList<PixelData> sobelPixels;
 
-	int h;
+	int h ;
 	int w;
 	
 	String name;
@@ -46,7 +49,7 @@ public class ImageData {
 				int rgb = img.getRGB(x, y);
 
 				// add to pixel data object list
-				data.add(new PixelData(rgb, x, y));
+				data.add(new PixelData(img, x, y));
 			}
 		}
 		
@@ -54,7 +57,7 @@ public class ImageData {
 	}
 
 	public BufferedImage getEnhancedImage() {
-		if (enhancedImage == null) {
+		if (histogramEqualizedImage == null) {
 
 			BufferedImage ei = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
 
@@ -70,12 +73,37 @@ public class ImageData {
 				ei.setRGB(px.x, px.y, rgb);
 			}
 
-			enhancedImage = ei;
-			enhancedPixels = getPixelData(enhancedImage);
+			histogramEqualizedImage = ei;
+			enhancedPixels = getPixelData(histogramEqualizedImage);
 			enhancedHistogram = new Histogram(enhancedPixels);
 		}
 
-		return enhancedImage;
+		return histogramEqualizedImage;
+	}
+	
+	public BufferedImage getSobelEnhancedImage() {
+		if (sobelEdgeImage == null) {
+			BufferedImage si = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+			
+			for (PixelData px : originalPixels) {
+				if(px.gradientEstimate > 152){
+					si.setRGB(px.x, px.y, Color.black.getRGB());
+				}
+				else
+				{
+					si.setRGB(px.x, px.y, Color.white.getRGB());
+				}
+				
+				// Set the greyscale pixel
+				//si.setRGB(px.x, px.y, rgb);
+			}
+
+			sobelEdgeImage = si;
+			sobelPixels = getPixelData(sobelEdgeImage);
+			sobelHistogram = new Histogram(sobelPixels);
+		}
+
+		return sobelEdgeImage;
 	}
 
 	public BufferedImage getOriginalImage() {
