@@ -1,4 +1,4 @@
-package HW7;
+package HW8;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

@@ -1,4 +1,4 @@
-package HW7;
+package HW8;
 
 import java.awt.Color;
 import java.awt.Dimension;
